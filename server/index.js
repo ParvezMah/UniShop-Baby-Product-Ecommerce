@@ -6,6 +6,8 @@ import { errorHandler } from "./middleware/errorMiddleware.js";
 
 // Routes import
 import authRoutes from "./routes/authRoutes.js";
+import swaggerUi from "swagger-ui-express";
+import { specs } from "./config/swagger.js";
 
 // Load env vars
 dotenv.config();
@@ -50,7 +52,7 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 // Increase body size limit for JSON and URL-encoded payloads
@@ -63,6 +65,15 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use("/api/auth", authRoutes);
 
 // API Documentation
+app.use(
+  "/api/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, {
+    explorer: true,
+    customCss: ".swagger-ui .topbar {display: none}",
+    customSiteTitle: "BabyMart API Documentation",
+  }),
+);
 
 // Home route
 app.get("/", (req, res) => {
