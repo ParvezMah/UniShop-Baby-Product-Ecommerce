@@ -48,7 +48,6 @@ const createUser = asyncHandler(async (req, res)=>{
     }
 })
 
-
 // getUserById
 const getUserById = asyncHandler(async (req, res)=>{
     const user = await User.findById(req.params.id).select("-password");
@@ -115,10 +114,67 @@ const deleteUserById = asyncHandler(async (req, res)=>{
     }
 })
 
+// addAddress
+const addAddress = asyncHandler(async (req, res)=>{
+    const user =await User.findById(req.params.id);
+
+    if(!user){
+        res.status(404);
+        throw new Error("User not found");
+    }
+
+    if (
+        user._id.toString() !== req.user._id.toString() &&
+        req.user.role !== "admin"
+    ){
+        res.status(403);
+        throw new Error("Not authorized to modify this user's addresses");
+    }
+
+    const { street, city, country, poastalCode, isDefault } = req.body;
+    if(!street || !city || !country || !poastalCode){
+        res.status(400);
+        throw new Error("All addresses fields are required");
+    }
+
+    // if this is set as default, make other addresses non-default
+    if(isDefault){
+        user.addresses.forEach((address)=>{
+            address.isDefault = false;
+        });
+    };
+
+    if(user.addAddress.lenght === 0 ){
+        user.addAddress.push({
+            street,
+            city,
+            country,
+            poastalCode,
+            isDefault: true,
+        });
+    } else {
+        user.addAddress.push({
+            street,
+            city,
+            country,
+            poastalCode,
+            isDefault: isDefault || false,
+        })
+    }
+    await user.save();
+
+    res.json({
+        success: true,
+        addresses: user.addresses,
+        message: "Address added successfully",
+    });
+});
+
 export {
     getUsers,
     createUser,
     getUserById,
     updateUserById,
-    deleteUserById
+    deleteUserById,
+    addAddress
 }
