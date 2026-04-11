@@ -7,6 +7,8 @@ import { errorHandler } from "./middleware/errorMiddleware.js";
 // Routes import
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js"
+import productRoutes from "./routes/productRoutes.js"
+import brandRoutes from "./routes/brandRoutes.js"
 import swaggerUi from "swagger-ui-express";
 import { specs } from "./config/swagger.js";
 
@@ -65,6 +67,8 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/brands", brandRoutes);
 
 // API Documentation
 app.use(
