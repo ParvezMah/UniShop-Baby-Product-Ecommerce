@@ -131,8 +131,8 @@ const addAddress = asyncHandler(async (req, res)=>{
         throw new Error("Not authorized to modify this user's addresses");
     }
 
-    const { street, city, country, poastalCode, isDefault } = req.body;
-    if(!street || !city || !country || !poastalCode){
+    const { street, city, country, postalCode, isDefault } = req.body;
+    if(!street || !city || !country || !postalCode){
         res.status(400);
         throw new Error("All addresses fields are required");
     }
@@ -144,20 +144,20 @@ const addAddress = asyncHandler(async (req, res)=>{
         });
     };
 
-    if(user.addAddress.lenght === 0 ){
-        user.addAddress.push({
+    if(user.addresses.length === 0 ){
+        user.addresses.push({
             street,
             city,
             country,
-            poastalCode,
+            postalCode,
             isDefault: true,
         });
     } else {
-        user.addAddress.push({
+        user.addresses.push({
             street,
             city,
             country,
-            poastalCode,
+            postalCode,
             isDefault: isDefault || false,
         })
     }
@@ -170,11 +170,103 @@ const addAddress = asyncHandler(async (req, res)=>{
     });
 });
 
+// updateAddress
+const updateAddress= asyncHandler(async (req, res)=>{
+    const user = await User.findById(req.params.id);
+
+    if(!user){
+        res.status(404);
+        throw new Error("User not found");
+    };
+
+    if (
+        user._id.toString() !== req.user._id.toString() &&
+        req.user.role !== "admin"
+    ){
+        res.status(403);
+        throw new Error("Not authorized to modify this user's addresses");
+    };
+
+    const address = user.addresses.id(req.params.addressId);
+
+    if(!address){
+        res.status(404);
+        throw new Error("Address not found");
+    };
+
+    const { street, city, country, postalCode, isDefault } = req.body;
+
+    if (street) address.street = street;
+    if (city) address.city = city;
+    if (country) address.country = country;
+    if (postalCode) address.postalCode = postalCode;
+
+    // if this is set as default, make other addresses non-default
+    if(isDefault){
+        user.addresses.forEach((address)=>{
+            address.isDefault = false;
+        });
+        address.isDefault = true;
+    };
+
+
+    await user.save();
+
+    res.json({
+        success: true,
+        addresses: user.addresses,
+        message: "Address updated successfully",
+    });
+});
+
+
+// deleteAddress
+const deleteAddress= asyncHandler(async (req, res)=>{
+    const user = await User.findById(req.params.id);
+
+    if(!user){
+        res.status(404);
+        throw new Error("User not found");
+    };
+
+    if (
+        user._id.toString() !== req.user._id.toString() &&
+        req.user.role !== "admin"
+    ){
+        res.status(403);
+        throw new Error("Not authorized to modify this user's addresses");
+    };
+    
+    const address = user.addresses.id(req.params.addressId);
+
+    if(!address){
+        res.status(404);
+        throw new Error("Address not found");
+    };
+
+    const wasDefault = address.isDefault;
+    user.addresses.pull(req.params.addressId);
+
+    if(wasDefault && user.addresses.lenght > 0 ){
+        use.addresses[0].isDefault = true;
+    }
+
+    await user.save();
+
+    res.json({
+        success: true,
+        addresses: user.addresses,
+        message: "Address deleted successfully",
+    })
+});
+
 export {
     getUsers,
     createUser,
     getUserById,
     updateUserById,
     deleteUserById,
-    addAddress
+    addAddress,
+    updateAddress,
+    deleteAddress
 }
