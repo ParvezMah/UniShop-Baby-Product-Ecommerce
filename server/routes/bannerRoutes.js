@@ -1,5 +1,6 @@
 import express from "express";
-import { admin, protect } from "../middleware/authMiddleware";
+import { admin, protect } from "../middleware/authMiddleware.js";
+import { createBanner, deleteBannerById, getBannerById, getBanners, updateBannerById } from "../controllers/bannerController.js";
 
 const router = express.Router();
 

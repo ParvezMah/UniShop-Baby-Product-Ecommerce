@@ -1,4 +1,4 @@
-import cloudinary from "../config/cloudinary";
+import cloudinary from "../config/cloudinary.js";
 import Banner from "../models/bannerModel.js";
 import asyncHandler from "express-async-handler"
 
