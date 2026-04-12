@@ -1,4 +1,10 @@
 import asyncHandler from "express-async-handler";
+import User from "../models/userModel.js";
+import Category from "../models/categoryModel.js";
+import Product from "../models/productModel.js";
+import Brand from "../models/brandModel.js";
+import Order from "../models/orderModel.js";
+
 
 
 const getStats = asyncHandler(async (req, res) => {
