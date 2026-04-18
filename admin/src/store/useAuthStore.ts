@@ -28,9 +28,13 @@ type AuthState = {
 const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
+      // state
       user: null,
+      // state
       token: null,
+      // state
       isAuthenticated: false,
+      // state setter action
       login: async (credentials) => {
         try {
           const response = await api.post("/auth/login", credentials);
@@ -46,6 +50,7 @@ const useAuthStore = create<AuthState>()(
           throw error;
         }
       },
+      // action
       register: async (userData) => {
         try {
           await api.post("/auth/register", userData);
@@ -54,6 +59,7 @@ const useAuthStore = create<AuthState>()(
           throw error;
         }
       },
+      // state setter action
       logout: () => {
         set({
           user: null,
@@ -61,11 +67,13 @@ const useAuthStore = create<AuthState>()(
           isAuthenticated: false,
         });
       },
+      // getter action
       checkIsAdmin: () => {
         const { user } = get();
         return user?.role === "admin";
       },
     }),
+    // Storage key configuration
     {
       name: "auth-storage",
     }
