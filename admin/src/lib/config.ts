@@ -1,14 +1,14 @@
 import axios from "axios";
 import type { AxiosInstance, AxiosResponse } from "axios";
-
 // Configuration utility for Admin API
+
 interface AdminApiConfig {
   baseURL: string;
   isProduction: boolean;
 }
 
-
 // Get API Configuration for admin
+
 export const getAdminApiConfig = (): AdminApiConfig => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -26,6 +26,7 @@ export const getAdminApiConfig = (): AdminApiConfig => {
 };
 
 // Create configured axios instance
+
 const createApiInstance = (): AxiosInstance => {
   const { baseURL } = getAdminApiConfig();
   const instance = axios.create({
@@ -34,7 +35,7 @@ const createApiInstance = (): AxiosInstance => {
       "Content-Type": "application/json",
     },
     withCredentials: true,
-    timeout: 60000, // 60 seconds timeout
+    timeout: 90000, // 90 seconds timeout
   });
 
   //   Add request interceptor to include auth token
@@ -59,8 +60,8 @@ const createApiInstance = (): AxiosInstance => {
       return Promise.reject(error);
     }
   );
-
   //   Add response interceptor for better error handling
+
   instance.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error) => {
@@ -78,7 +79,6 @@ const createApiInstance = (): AxiosInstance => {
       return Promise.reject(error);
     }
   );
-
   return instance;
 };
 
@@ -86,6 +86,7 @@ const createApiInstance = (): AxiosInstance => {
 export const adminApi = createApiInstance();
 
 // Admin API endpoints
+
 export const ADMIN_API_ENDPOINTS = {
   // Auth
   REGISTER: "/auth/register",
@@ -99,8 +100,8 @@ export const ADMIN_API_ENDPOINTS = {
   // Categories
 } as const;
 
-
 // Helper function to build query parameters
+
 export const buildAdminQueryParams = (
   params: Record<string, string | number | boolean | undefined>
 ): string => {
