@@ -3,7 +3,7 @@ import Category from "../models/categoryModel.js";
 import cloudinary from "../config/cloudinary.js";
 
 const getCategories = asyncHandler(async (req, res) => {
-    const parse = parseInt(req.query.page) || 1;
+    const page = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.perPage) || 20;
     const sortOrder = req.query.sortOrder || "asc";
 
