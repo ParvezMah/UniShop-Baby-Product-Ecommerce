@@ -15,7 +15,7 @@ import statsRoutes from "./routes/statsRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
-import analyticsRoutes from "./routes/cartRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 
 import swaggerUi from "swagger-ui-express";
