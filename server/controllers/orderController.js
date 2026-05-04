@@ -5,7 +5,7 @@ import Cart from "../models/cartModel.js";
 // @desc    Get all orders for a user
 // @route   GET /api/orders
 // @access  Private
-const getOrders = asyncHandler(async (req, res) => {
+export const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({ userId: req.user._id }).populate(
     "items.productId"
   );
@@ -15,7 +15,7 @@ const getOrders = asyncHandler(async (req, res) => {
 // @desc    Get order by ID
 // @route   GET /api/orders/:id
 // @access  Private
-const getOrderById = asyncHandler(async (req, res) => {
+export const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate("items.productId");
 
   if (
@@ -33,7 +33,7 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @desc    Create order from cart
 // @route   POST /api/orders
 // @access  Private
-const createOrderFromCart = asyncHandler(async (req, res) => {
+export const createOrderFromCart = asyncHandler(async (req, res) => {
   const { items, shippingAddress } = req.body;
 
   // Validate that items are provided
@@ -95,7 +95,7 @@ const createOrderFromCart = asyncHandler(async (req, res) => {
 // @desc    Update order status
 // @route   PUT /api/orders/:id/status
 // @access  Private
-const updateOrderStatus = asyncHandler(async (req, res) => {
+export const updateOrderStatus = asyncHandler(async (req, res) => {
   if (!req.body) {
     return res.status(400).json({
       success: false,
@@ -178,7 +178,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 // @desc    Delete order
 // @route   DELETE /api/orders/:id
 // @access  Private
-const deleteOrder = asyncHandler(async (req, res) => {
+export const deleteOrder = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
@@ -212,7 +212,7 @@ const deleteOrder = asyncHandler(async (req, res) => {
 // @desc    Get all orders for admin
 // @route   GET /api/orders/admin
 // @access  Private/Admin
-const getAllOrdersAdmin = asyncHandler(async (req, res) => {
+export const getAllOrdersAdmin = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const sortOrder = req.query.sortOrder === "desc" ? -1 : 1;
@@ -292,12 +292,3 @@ const getAllOrdersAdmin = asyncHandler(async (req, res) => {
     currentPage: page,
   });
 });
-
-export {
-    getOrders,
-    getOrderById,
-    createOrderFromCart,
-    updateOrderStatus,
-    deleteOrder,
-    getAllOrdersAdmin,
-}

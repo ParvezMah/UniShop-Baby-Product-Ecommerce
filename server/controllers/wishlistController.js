@@ -5,7 +5,7 @@ import Product from "../models/productModel.js";
 // @desc    Get user's wishlist
 // @route   GET /api/wishlist
 // @access  Private
-const getUserWishlist = asyncHandler(async (req, res) => {
+export const getUserWishlist = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).select("wishlist");
 
   if (!user) {
@@ -22,7 +22,7 @@ const getUserWishlist = asyncHandler(async (req, res) => {
 // @desc    Add product to wishlist
 // @route   POST /api/wishlist/add
 // @access  Private
-const addToWishlist = asyncHandler(async (req, res) => {
+export const addToWishlist = asyncHandler(async (req, res) => {
   const { productId } = req.body;
 
   if (!productId) {
@@ -64,7 +64,7 @@ const addToWishlist = asyncHandler(async (req, res) => {
 // @desc    Remove product from wishlist
 // @route   DELETE /api/wishlist/remove
 // @access  Private
-const removeFromWishlist = asyncHandler(async (req, res) => {
+export const removeFromWishlist = asyncHandler(async (req, res) => {
   const { productId } = req.body;
 
   if (!productId) {
@@ -95,7 +95,7 @@ const removeFromWishlist = asyncHandler(async (req, res) => {
 // @desc    Get wishlist products with details
 // @route   POST /api/wishlist/products
 // @access  Private
-const getWishlistProducts = asyncHandler(async (req, res) => {
+export const getWishlistProducts = asyncHandler(async (req, res) => {
   const { productIds } = req.body;
 
   if (!productIds || !Array.isArray(productIds)) {
@@ -117,7 +117,7 @@ const getWishlistProducts = asyncHandler(async (req, res) => {
 // @desc    Clear entire wishlist
 // @route   DELETE /api/wishlist/clear
 // @access  Private
-const clearWishlist = asyncHandler(async (req, res) => {
+export const clearWishlist = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (!user) {
@@ -135,11 +135,3 @@ const clearWishlist = asyncHandler(async (req, res) => {
     message: "Wishlist cleared successfully",
   });
 });
-
-export {
-    getUserWishlist,
-    addToWishlist,
-    removeFromWishlist,
-    getWishlistProducts,
-    clearWishlist
-}

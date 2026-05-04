@@ -31,7 +31,7 @@ const createBrand = asyncHandler(async (req, res)=> {
     if(image){
         // upload image to cloudinary
         const result = await cloudinary.uploader.upload(image, {
-            folder: "admin-dashboards/brands",
+            folder: "babymartyts/brands",
         });
         imageUrl = result.secure_url;
     };
@@ -60,7 +60,7 @@ const updateBrandById = asyncHandler(async (req, res)=> {
         if(image !== undefined){
             if(image){
                 const result = await cloudinary.uploader.upload(image, {
-                    folder: "admin-dashboard/brands",
+                    folder: "babymartyt/brands",
                 });
                 brand.image = result.secure_url;
             } else {

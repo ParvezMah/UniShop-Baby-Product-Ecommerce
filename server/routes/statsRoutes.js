@@ -1,9 +1,8 @@
 import express from "express";
+import { getStats } from "../controllers/statsController.js";
 import { protect } from "../middleware/authMiddleware.js";
-import getStats from "../controllers/statsController.js";
 
 const router = express.Router();
-
 
 /**
  * @swagger
