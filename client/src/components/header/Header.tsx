@@ -1,6 +1,11 @@
 import Container from "../common/Container";
 import Logo from "../common/Logo";
+import CartIcon from "./CartIcon";
+import OrdersIcon from "./OrdersIcon";
+import SearchInput from "./SearchInput";
 import TopHeader from "./TopHeader";
+import UserButton from "./UserButton";
+import WishlistIcon from "./WishlistIcon";
 // import WishlistIcon from "./WishlistIcon";
 
 const Header = () => {
@@ -14,13 +19,13 @@ const Header = () => {
           <div className="md:hidden flex items-center gap-3">
             OrdersIcon WishlistIcon CartIcon
           </div>
-          {/* <SearchInput /> */}
+          <SearchInput />
         </div>
         <div className="hidden md:inline-flex items-center gap-5">
-          {/* <OrdersIcon /> */}
-          {/* <WishlistIcon /> */}
-          {/* <UserButton /> */}
-          {/* <CartIcon /> */}
+          <OrdersIcon />
+          <WishlistIcon />
+          <UserButton />
+          <CartIcon />
         </div>
       </Container>
     </header>
