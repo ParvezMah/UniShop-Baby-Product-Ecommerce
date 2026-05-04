@@ -1,6 +1,4 @@
 import Container from "../common/Container";
-import Logo from "../common/Logo";
-import OrdersIcon from "./OrdersIcon";
 import TopHeader from "./TopHeader";
 // import WishlistIcon from "./WishlistIcon";
 
@@ -11,14 +9,14 @@ const Header = () => {
       <Container className="flex items-center justify-between gap-10 py-4">
         <div className="flex flex-1 items-center justify-between md:justify-start md:gap-12">
           {/* Sidebar */}
-          <Logo />
+          {/* <Logo /> */}
           <div className="md:hidden flex items-center gap-3">
             OrdersIcon WishlistIcon CartIcon
           </div>
           {/* <SearchInput /> */}
         </div>
         <div className="hidden md:inline-flex items-center gap-5">
-          <OrdersIcon />
+          {/* <OrdersIcon /> */}
           {/* <WishlistIcon /> */}
           {/* <UserButton /> */}
           {/* <CartIcon /> */}
