@@ -1,7 +1,6 @@
-import React from "react";
-import Container from "../common/Container";
 import { topHelpCenter } from "@/constants/data";
 import Link from "next/link";
+import Container from "../common/Container";
 import SelectCurrency from "./SelectCurrency";
 import TopSocialLInks from "./TopSocialLInks";
 
@@ -24,8 +23,8 @@ const TopHeader = () => {
           100% Secure delivery without contracting the courier
         </p>
         <div className="hidden md:inline-flex items-center justify-end">
-          {/* <SelectCurrency />
-          <TopSocialLInks /> */}
+          <SelectCurrency />
+          <TopSocialLInks />
         </div>
       </Container>
     </div>
