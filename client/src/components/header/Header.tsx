@@ -1,12 +1,8 @@
-import React from "react";
-import TopHeader from "./TopHeader";
 import Container from "../common/Container";
 import Logo from "../common/Logo";
-import SearchInput from "./SearchInput";
 import OrdersIcon from "./OrdersIcon";
+import TopHeader from "./TopHeader";
 // import WishlistIcon from "./WishlistIcon";
-import UserButton from "./UserButton";
-import CartIcon from "./CartIcon";
 
 const Header = () => {
   return (
